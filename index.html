@@ -5,28 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monoculo AR</title>
 
-<script src="https://unpkg.com/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://unpkg.com/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
 <style>
-  body { margin: 0; }
+  body { margin: 0; overflow: hidden; }
 </style>
 </head>
 
 <body>
 
-<a-scene mindar-image="imageTargetSrc: targets.mind;" 
-         color-space="sRGB" 
-         renderer="colorManagement: true, physicallyCorrectLights"
-         vr-mode-ui="enabled: false"
-         device-orientation-permission-ui="enabled: true">
+<a-scene 
+  mindar-image="imageTargetSrc: targets.mind; autoStart: true;"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: true"
+  embedded
+  color-space="sRGB"
+  renderer="colorManagement: true; physicallyCorrectLights: true;">
 
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
   <a-entity mindar-image-target="targetIndex: 0">
-    <a-torus radius="0.6" radius-tubular="0.1" 
-             color="#d4af37" 
-             rotation="90 0 0">
+    <a-torus 
+      radius="0.6" 
+      radius-tubular="0.1"
+      color="#d4af37"
+      rotation="90 0 0">
     </a-torus>
   </a-entity>
 
