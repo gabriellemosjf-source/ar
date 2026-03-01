@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monoculo AR</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monoculo AR</title>
 
-  <script src="https://unpkg.com/mind-ar@1.2.2/dist/mindar-image-three.prod.js"></script>
-  <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+<script src="https://unpkg.com/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
-  <style>
-    body { margin: 0; overflow: hidden; }
-  </style>
+<style>
+  body { margin: 0; }
+</style>
 </head>
+
 <body>
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
+<a-scene mindar-image="imageTargetSrc: targets.mind;" 
+         color-space="sRGB" 
+         renderer="colorManagement: true, physicallyCorrectLights"
+         vr-mode-ui="enabled: false"
+         device-orientation-permission-ui="enabled: true">
 
-  const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-    container: document.body,
-    imageTargetSrc: "targets.mind",
-  });
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  const { renderer, scene, camera } = mindarThree;
-  const anchor = mindarThree.addAnchor(0);
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-torus radius="0.6" radius-tubular="0.1" 
+             color="#d4af37" 
+             rotation="90 0 0">
+    </a-torus>
+  </a-entity>
 
-  const geometry = new THREE.TorusGeometry(0.6, 0.1, 32, 200);
-  const material = new THREE.MeshStandardMaterial({ color: 0xd4af37 });
-  const monoculo = new THREE.Mesh(geometry, material);
-
-  monoculo.rotation.x = Math.PI / 2;
-  anchor.group.add(monoculo);
-
-  const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-  scene.add(light);
-
-  await mindarThree.start();
-  renderer.setAnimationLoop(() => {
-    renderer.render(scene, camera);
-  });
-
-});
-</script>
+</a-scene>
 
 </body>
 </html>
